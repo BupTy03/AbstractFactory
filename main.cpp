@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <memory>
 #include <vector>
+#include <type_traits>
 
 
 class Shape {
@@ -54,12 +55,20 @@ Shape* CreateCircleFunction(int arg1, const std::string& arg2) {
 }
 
 
+template<typename T, typename = typename std::enable_if<std::is_base_of<Shape, T>::value>::type>
+struct ShapeCreator {
+    Shape* operator()(int arg1, const std::string& arg2) const {
+        return new T(arg1, arg2);
+    }
+};
+
+
 int main()
 {
     ShapeFactory factory;
-    factory.Register(typeid(Line), [](int arg1, const std::string& arg2) { return new Line(arg1, arg2); });
-    factory.Register(typeid(Triangle), CreateTriangleFunctor());
-    factory.Register(typeid(Circle), CreateCircleFunction);
+    factory.Register(typeid(Line), ShapeCreator<Line>());
+    factory.Register(typeid(Triangle), ShapeCreator<Triangle>());
+    factory.Register(typeid(Circle), ShapeCreator<Circle>());
 
     std::vector<std::unique_ptr<Shape>> shapes;
     shapes.reserve(3);
