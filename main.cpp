@@ -40,7 +40,7 @@ public:
 // Можем использовать следующим образом: using ShapeFactory = Factory<Shape, int, Shape*(*)(int, const std::string&), std::map>;
 // вместо std::type_index, можем использовать int - целочисленный идентификатор
 // вместо std::function<Shape*(int, const std::string&)> - можем использовать обычный указатель на функцию Shape*(*)(int, const std::string&)
-// вместо std::unordered_map - можем исползовать std::map или любой другой ассоциативный контейнер с похожим API
+// вместо std::unordered_map - можем использовать std::map или любой другой ассоциативный контейнер с похожим API
 
 
 struct CreateTriangleFunctor {
