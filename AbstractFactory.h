@@ -23,13 +23,13 @@ public:
     }
 
     template<typename... Args>
-    AbstractProduct* Create(const IdentifierType& id, Args&&... args)
+    AbstractProduct* Create(const IdentifierType& id, Args&&... args) const
     {
         auto it = associations_.find(id);
         if(it == associations_.end())
             return nullptr;
 
-        return it->second(std::forward<Args>(args)...);;
+        return it->second(std::forward<Args>(args)...);
     }
 
 private:
